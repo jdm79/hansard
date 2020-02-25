@@ -10,6 +10,7 @@ def url_scraper
   # refactor all of this into methods
   @detail_urls = []
   @issues = ""
+
   url = 'https://hansard.parliament.uk/lords/'
   unparsed_page = HTTParty.get(url)
   parsed_page = Nokogiri::HTML(unparsed_page)
@@ -17,6 +18,7 @@ def url_scraper
   parsed_page.css('div.debate-by-links.panel-group a').map do |link|
     @detail_urls << link.text
   end
+
   @detail_urls.shift
   @detail_urls.pop
   @detail_urls.pop
@@ -26,8 +28,9 @@ def url_scraper
     issue = issue.strip
     @issues += issue + ", "
   end
+
     @issues = @issues.chop.chop
-    if @issues > ""
+    if @issues != ""
       puts "Today, the Lords discussed: " + @issues
       tweet "Today, the Lords discussed: " + @issues
     else
