@@ -7,10 +7,10 @@ require 'httparty'
 
 
 def url_scraper
-
+  # refactor all of this into methods
   @detail_urls = []
   @issues = ""
-  url = 'https://hansard.parliament.uk/lords/2020-02-24'
+  url = 'https://hansard.parliament.uk/lords/'
   unparsed_page = HTTParty.get(url)
   parsed_page = Nokogiri::HTML(unparsed_page)
 
@@ -27,8 +27,15 @@ def url_scraper
     @issues += issue + ", "
   end
     @issues = @issues.chop.chop
-    puts "Today, the Lords discussed: " + @issues
-    # tweet "Today, the Lords discussed: " + @issues
+    if @issues > ""
+      puts "Today, the Lords discussed: " + @issues
+      tweet "Today, the Lords discussed: " + @issues
+    else
+      puts "Nothing to see here. The Lords are not debating."
+    end
 end
 
-url_scraper
+loop do
+  url_scraper
+  sleep 86400
+end
