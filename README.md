@@ -5,3 +5,5 @@ This very basic web scraper grabs the issues that are being discussed daily in t
 Intend to host the script online somehow - if I can find something for free. Or write it in python and run it headless on a raspberry pi.
 
 It uses [this library called Chatterbot](https://github.com/muffinista/chatterbot).
+
+[HansardLord Twitter bot](https://twitter.com/HansardLord)
