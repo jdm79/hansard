@@ -32,7 +32,7 @@ def url_scraper
     @issues = @issues.chop
     if @issues !=  ""
       check = @issues.split("")
-      if check.length <= 280
+      if check.length <= 262
         puts "Today, the Lords discussed: " + @issues
         tweet "Today, the Lords discussed: " + @issues
       else
