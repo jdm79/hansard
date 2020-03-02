@@ -29,12 +29,20 @@ def url_scraper
     @issues += issue + ", "
   end
 
-    @issues = @issues.chop.chop
-    if @issues != ""
-      puts "Today, the Lords discussed: " + @issues
-      tweet "Today, the Lords discussed: " + @issues
+    @issues = @issues.chop
+    if @issues !=  ""
+      check = @issues.split("")
+      if check.length <= 280
+        puts "Today, the Lords discussed: " + @issues
+        tweet "Today, the Lords discussed: " + @issues
+      else
+        first, second = @issues.chars.each_slice(@issues.length / 2).map(&:join)
+        tweet "Today the Lords discussed: " + first
+        sleep 10
+        tweet  "Cont'd..." + second.chop
+      end
     else
-      puts "Nothing to see here. The Lords are not debating."
+      tweet "Nothing to see here. The Lords are not debating today."
     end
 end
 
@@ -42,3 +50,5 @@ loop do
   url_scraper
   sleep 86400
 end
+
+tweet "Nothing to see here. The Lords are not debating today."
