@@ -10,6 +10,8 @@ def url_scraper
   # refactor all of this into methods
   @detail_urls = []
   @issues = ""
+  @first = ""
+  @second = ""
 
   url = 'https://hansard.parliament.uk/lords/'
   unparsed_page = HTTParty.get(url)
@@ -37,14 +39,27 @@ def url_scraper
         puts "Today, the Lords discussed: " + @issues
         tweet "Today, the Lords discussed: " + @issues
       else
-        first, second = @issues.chars.each_slice(@issues.length / 2).map(&:join)
+        first, third = @issues.chars.each_slice(@issues.length / 2).map(&:join)
+        check = first.split("")
+        if check.length <= 262
         puts "Today, the Lords discussed: " + first
         tweet "Today, the Lords discussed: " + first
-
         sleep 5
-
-        puts "Cont'd... " + second.chop
-        tweet "Cont'd... " + second.chop
+        puts "Cont'd... " + third
+        tweet "Cont'd... " + second
+        else
+          first, second = first.chars.each_slice(first.length / 2).map(&:join)
+          check = first.split("")
+          if check.length <= 262
+            puts "Today, the Lords discussed: " + first
+            tweet "Today, the Lords discussed: " + first
+            sleep 5
+            puts "Cont'd... " + second
+            tweet "Cont'd... " + second
+            puts "Cont'd... " + third
+            tweet "Cont'd... " + third
+          end
+        end
       end
     else
       puts "Nothing to see here. The Lords are not debating today."
