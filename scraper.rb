@@ -19,10 +19,11 @@ def url_scraper
     @detail_urls << link.text
   end
 
+
   @detail_urls.shift
-  @detail_urls.pop
-  @detail_urls.pop
-  @detail_urls.pop
+  # @detail_urls.pop
+  # @detail_urls.pop
+  # @detail_urls.pop
 
   @detail_urls.uniq.sort.each do | issue |
     issue = issue.strip
@@ -37,11 +38,16 @@ def url_scraper
         tweet "Today, the Lords discussed: " + @issues
       else
         first, second = @issues.chars.each_slice(@issues.length / 2).map(&:join)
+        puts "Today, the Lords discussed: " + first
         tweet "Today, the Lords discussed: " + first
-        sleep 10
-        tweet  "Cont'd... " + second.chop
+
+        sleep 5
+
+        puts "Cont'd... " + second.chop
+        tweet "Cont'd... " + second.chop
       end
     else
+      puts "Nothing to see here. The Lords are not debating today."
       tweet "Nothing to see here. The Lords are not debating today."
     end
 end
