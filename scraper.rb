@@ -13,26 +13,24 @@ def url_scraper
   @first = ""
   @second = ""
 
-  url = 'https://hansard.parliament.uk/lords/'
+  # url = 'https://hansard.parliament.uk/lords/'
+  url = 'https://hansard.parliament.uk/lords/2020-03-13'
   unparsed_page = HTTParty.get(url)
   parsed_page = Nokogiri::HTML(unparsed_page)
 
-  parsed_page.css('div.debate-by-links.panel-group a').map do |link|
+  # parsed_page.css('div.debate-by-links.panel-group a').map do |link|
+  parsed_page.css('div#debates-collapse-LordsChamber #sectionTree li a').map do |link|
     @detail_urls << link.text
   end
 
-
-  @detail_urls.shift
-  # @detail_urls.pop
-  # @detail_urls.pop
-  # @detail_urls.pop
 
   @detail_urls.uniq.sort.each do | issue |
     issue = issue.strip
     @issues += issue + ", "
   end
 
-    @issues = @issues.chop
+    
+    @issues = @issues.chop.chop # this gets rid of the trailing comma on last issue
     if @issues !=  ""
       check = @issues.split("")
       if check.length <= 262
@@ -62,7 +60,7 @@ def url_scraper
         end
       end
     else
-      puts "Nothing to see here. The Lords are not debating today."
+      # puts "Nothing to see here. The Lords are not debating today."
       tweet "Nothing to see here. The Lords are not debating today."
     end
 end
