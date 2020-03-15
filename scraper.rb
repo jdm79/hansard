@@ -13,8 +13,7 @@ def url_scraper
   @first = ""
   @second = ""
 
-  # url = 'https://hansard.parliament.uk/lords/'
-  url = 'https://hansard.parliament.uk/lords/2020-03-13'
+  url = 'https://hansard.parliament.uk/lords/'
   unparsed_page = HTTParty.get(url)
   parsed_page = Nokogiri::HTML(unparsed_page)
 
